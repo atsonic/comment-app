@@ -34,7 +34,7 @@ connection.connect((err) => {
 
 //form
 app.get("/", (req, res) => {
-  res.render("./hello.ejs");
+  res.render("./index.ejs");
   res.end();
 });
 
@@ -60,10 +60,13 @@ app.post("/api/", (req, res) => {
       query,
       { nickname: req.body.nickname, comment: req.body.comment },
       (err, rows) => {
-        if (err) res.end("fail");
-        res.statusCode = 200;
-        res.send("success");
-        res.end();
+        if (err) {
+          res.statusCode = 200;
+          res.end(JSON.stringify({result: false}));
+        }else{
+          res.statusCode = 200;
+          res.end(JSON.stringify({result: true}));
+        }
       }
     );
   } catch (e) {
